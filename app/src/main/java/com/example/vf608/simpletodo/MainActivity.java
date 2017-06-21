@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> items;
     ArrayAdapter<String> itemsAdapter;
     ListView lvItems;
+    int editPosition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,25 @@ public class MainActivity extends AppCompatActivity {
         // display a notification to the user
         Toast.makeText(getApplicationContext(), "Item added to list", Toast.LENGTH_SHORT).show();
     }
+    public void onEditItem(View v) {
+        // grab the EditText's content as a String
+        EditText editItem = (EditText) findViewById(R.id.editText2);
+        String newString = editItem.getText().toString();
+        items.set(editPosition, newString);
+        // notify the adapter that the underlying dataset changed
+        itemsAdapter.notifyDataSetChanged();
+
+        writeItems();
+
+        EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
+        etNewItem.setVisibility(View.VISIBLE);
+        editItem.setVisibility(View.INVISIBLE);
+        Button button = (Button) findViewById(R.id.btnAddItem);
+        button.setVisibility(View.VISIBLE);
+        Button editButton = (Button) findViewById(R.id.editButton);
+        editButton.setVisibility(View.INVISIBLE);
+
+    }
     private void setupListViewListener() {
         // set the ListView's itemLongClickListener
         lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -66,9 +87,36 @@ public class MainActivity extends AppCompatActivity {
                 writeItems();
 
                 Log.i("MainActivity", "Removed item " + position);
+                EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
+                etNewItem.setVisibility(View.VISIBLE);
+                EditText editItem = (EditText) findViewById(R.id.editText2);
+                editItem.setVisibility(View.INVISIBLE);
+                Button button = (Button) findViewById(R.id.btnAddItem);
+                button.setVisibility(View.VISIBLE);
+                Button editButton = (Button) findViewById(R.id.editButton);
+                editButton.setVisibility(View.INVISIBLE);
                 // return true to tell the framework that the long click was consumed
                 return true;
             }
+        });
+        //optional edit
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
+                etNewItem.setVisibility(View.INVISIBLE);
+                EditText editItem = (EditText) findViewById(R.id.editText2);
+                editItem.setVisibility(View.VISIBLE);
+                editItem.setText(items.get(position));
+                editPosition = position;
+                Button button = (Button) findViewById(R.id.btnAddItem);
+                button.setVisibility(View.INVISIBLE);
+                Button editButton = (Button) findViewById(R.id.editButton);
+                editButton.setVisibility(View.VISIBLE);
+
+                return;
+            }
+
         });
     }
     // returns the file in which the data is stored
