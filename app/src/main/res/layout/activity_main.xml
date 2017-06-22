@@ -32,12 +32,38 @@
         android:id="@+id/etNewItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:ems="10"
+        android:hint="Add a new item"
+        android:inputType="textPersonName"
+        android:layout_alignBaseline="@+id/btnAddItem"
+        android:layout_alignBottom="@+id/btnAddItem"
+        android:layout_toLeftOf="@+id/btnAddItem"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/editButton"
+        android:onClick="onEditItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:visibility="invisible"
+        android:layout_alignBaseline="@+id/btnAddItem"
+        android:layout_alignBottom="@+id/btnAddItem"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:visibility="invisible"
+        android:layout_alignBaseline="@+id/etNewItem"
+        android:layout_alignBottom="@+id/etNewItem"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/btnAddItem"
-        android:layout_toStartOf="@+id/btnAddItem"
-        android:ems="10"
-        android:hint="Add a new item"
-        android:inputType="textPersonName" />
+        android:layout_toStartOf="@+id/btnAddItem" />
 </RelativeLayout>
